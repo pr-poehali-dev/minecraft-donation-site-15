@@ -11,25 +11,25 @@ const Index = () => {
   const privileges = [
     {
       id: 1,
-      name: 'VIP',
+      name: 'Оруженосец',
       price: 199,
-      features: ['Приоритетный вход', 'Дополнительные команды', 'Цветной ник', 'Кит VIP'],
+      features: ['Приоритетный вход', 'Дополнительные команды', 'Цветной ник', 'Кит Оруженосца'],
       popular: false,
       icon: 'Crown'
     },
     {
       id: 2,
-      name: 'Premium',
+      name: 'Рыцарь',
       price: 499,
-      features: ['Все возможности VIP', 'Креативный режим', 'Приватные территории', 'Кит Premium'],
+      features: ['Все возможности Оруженосца', 'Креативный режим', 'Приватные территории', 'Кит Рыцаря'],
       popular: true,
       icon: 'Diamond'
     },
     {
       id: 3,
-      name: 'Elite',
+      name: 'Герцог',
       price: 999,
-      features: ['Все возможности Premium', 'Флай в лобби', 'God режим', 'Личный warp', 'Кит Elite'],
+      features: ['Все возможности Рыцаря', 'Флай в лобби', 'God режим', 'Личный warp', 'Кит Герцога'],
       popular: false,
       icon: 'Star'
     }
