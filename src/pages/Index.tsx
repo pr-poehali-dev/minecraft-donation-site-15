@@ -20,14 +20,22 @@ const Index = () => {
   const privileges = [
     {
       id: 1,
+      name: 'Крестьянин',
+      price: 99,
+      features: ['Цветной ник', 'Базовые команды', 'Кит Крестьянина'],
+      popular: false,
+      icon: 'Hammer'
+    },
+    {
+      id: 2,
       name: 'Оруженосец',
       price: 199,
-      features: ['Приоритетный вход', 'Дополнительные команды', 'Цветной ник', 'Кит Оруженосца'],
+      features: ['Все возможности Крестьянина', 'Приоритетный вход', 'Дополнительные команды', 'Кит Оруженосца'],
       popular: false,
       icon: 'Crown'
     },
     {
-      id: 2,
+      id: 3,
       name: 'Рыцарь',
       price: 499,
       features: ['Все возможности Оруженосца', 'Креативный режим', 'Приватные территории', 'Кит Рыцаря'],
@@ -35,12 +43,36 @@ const Index = () => {
       icon: 'Diamond'
     },
     {
-      id: 3,
+      id: 4,
+      name: 'Барон',
+      price: 799,
+      features: ['Все возможности Рыцаря', 'Флай в лобби', 'Телепорт к игрокам', 'Кит Барона'],
+      popular: false,
+      icon: 'Shield'
+    },
+    {
+      id: 5,
+      name: 'Граф',
+      price: 1299,
+      features: ['Все возможности Барона', 'God режим', 'Личный warp', 'Невидимость', 'Кит Графа'],
+      popular: false,
+      icon: 'Sword'
+    },
+    {
+      id: 6,
       name: 'Герцог',
-      price: 999,
-      features: ['Все возможности Рыцаря', 'Флай в лобби', 'God режим', 'Личный warp', 'Кит Герцога'],
+      price: 1999,
+      features: ['Все возможности Графа', 'Изменение времени', 'Управление погодой', 'Кит Герцога'],
       popular: false,
       icon: 'Star'
+    },
+    {
+      id: 7,
+      name: 'Король',
+      price: 2999,
+      features: ['Все возможности Герцога', 'Полный доступ к командам', 'Особый префикс', 'Королевский кит'],
+      popular: false,
+      icon: 'Trophy'
     }
   ];
 
@@ -218,7 +250,7 @@ const Index = () => {
         {activeSection === 'privileges' && (
           <section className="animate-fade-in">
             <h3 className="text-3xl font-bold text-white mb-8 text-center">Выберите привилегию</h3>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
               {privileges.map((privilege) => (
                 <Card key={privilege.id} className={`relative bg-gray-800/50 border-gray-700 hover:border-primary/50 transition-all hover:scale-105 ${privilege.popular ? 'ring-2 ring-primary' : ''}`}>
                   {privilege.popular && (
