@@ -8,6 +8,15 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const [activeSection, setActiveSection] = useState('privileges');
 
+  const donatPacks = [
+    { id: 1, amount: 100, price: 100, bonus: 0 },
+    { id: 2, amount: 500, price: 500, bonus: 25 },
+    { id: 3, amount: 1000, price: 1000, bonus: 100 },
+    { id: 4, amount: 2500, price: 2500, bonus: 300 },
+    { id: 5, amount: 5000, price: 5000, bonus: 750 },
+    { id: 6, amount: 10000, price: 10000, bonus: 2000 }
+  ];
+
   const privileges = [
     {
       id: 1,
@@ -62,6 +71,10 @@ const Index = () => {
     alert(`Покупка привилегии ${privilegeName} за ${price}₽ - функция в разработке`);
   };
 
+  const handleDonatPurchase = (amount: number, price: number) => {
+    alert(`Покупка ${amount} донат валюты за ${price}₽ - функция в разработке`);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
       {/* Header */}
@@ -77,6 +90,7 @@ const Index = () => {
             <nav className="hidden md:flex space-x-6">
               {[
                 { id: 'privileges', label: 'Привилегии', icon: 'Crown' },
+                { id: 'donat', label: 'Донат валюта', icon: 'Coins' },
                 { id: 'rules', label: 'Правила', icon: 'Shield' },
                 { id: 'support', label: 'Поддержка', icon: 'MessageCircle' }
               ].map((item) => (
@@ -127,6 +141,79 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12">
+        {/* Donat Currency Section */}
+        {activeSection === 'donat' && (
+          <section className="animate-fade-in">
+            <h3 className="text-3xl font-bold text-white mb-4 text-center">Донат валюта</h3>
+            <p className="text-gray-300 text-center mb-8 max-w-2xl mx-auto">
+              1 рубль = 1 донат валюта. Используй донат валюту для покупок в игре!
+            </p>
+            <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-6">
+              {donatPacks.map((pack) => (
+                <Card key={pack.id} className="bg-gray-800/50 border-gray-700 hover:border-primary/50 transition-all hover:scale-105">
+                  <CardHeader className="text-center pb-4">
+                    <div className="w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name="Coins" size={32} className="text-yellow-500" />
+                    </div>
+                    <CardTitle className="text-xl text-white">
+                      {pack.amount.toLocaleString()} донат валюты
+                    </CardTitle>
+                    {pack.bonus > 0 && (
+                      <Badge className="bg-green-600 text-white mt-2">
+                        +{pack.bonus} бонус!
+                      </Badge>
+                    )}
+                    <CardDescription className="text-2xl font-bold text-primary mt-2">
+                      {pack.price}₽
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center mb-4">
+                      <p className="text-gray-300 text-sm">
+                        Получите: <span className="text-yellow-500 font-bold">
+                          {(pack.amount + pack.bonus).toLocaleString()}
+                        </span> донат валюты
+                      </p>
+                    </div>
+                    <Button 
+                      className="w-full bg-yellow-600 hover:bg-yellow-700 text-white"
+                      onClick={() => handleDonatPurchase(pack.amount + pack.bonus, pack.price)}
+                    >
+                      Купить за {pack.price}₽
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="mt-12 text-center">
+              <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-6 max-w-2xl mx-auto">
+                <h4 className="text-xl font-bold text-white mb-3 flex items-center justify-center">
+                  <Icon name="Info" size={20} className="text-primary mr-2" />
+                  Как использовать донат валюту?
+                </h4>
+                <div className="grid md:grid-cols-2 gap-4 text-gray-300">
+                  <div className="flex items-center">
+                    <Icon name="ShoppingBag" size={16} className="text-primary mr-2" />
+                    Покупка предметов в игре
+                  </div>
+                  <div className="flex items-center">
+                    <Icon name="Sparkles" size={16} className="text-primary mr-2" />
+                    Улучшение экипировки
+                  </div>
+                  <div className="flex items-center">
+                    <Icon name="Home" size={16} className="text-primary mr-2" />
+                    Покупка территорий
+                  </div>
+                  <div className="flex items-center">
+                    <Icon name="Zap" size={16} className="text-primary mr-2" />
+                    Временные бусты
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Privileges Section */}
         {activeSection === 'privileges' && (
           <section className="animate-fade-in">
