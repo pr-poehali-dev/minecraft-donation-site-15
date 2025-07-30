@@ -1,12 +1,291 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
+import Icon from '@/components/ui/icon';
 
 const Index = () => {
+  const [activeSection, setActiveSection] = useState('privileges');
+
+  const privileges = [
+    {
+      id: 1,
+      name: 'VIP',
+      price: 199,
+      features: ['Приоритетный вход', 'Дополнительные команды', 'Цветной ник'],
+      popular: false,
+      icon: 'Crown'
+    },
+    {
+      id: 2,
+      name: 'Premium',
+      price: 499,
+      features: ['Все возможности VIP', 'Креативный режим', 'Приватные территории', 'Кит Premium'],
+      popular: true,
+      icon: 'Diamond'
+    },
+    {
+      id: 3,
+      name: 'Elite',
+      price: 999,
+      features: ['Все возможности Premium', 'Флай в лобби', 'God режим', 'Личный warp', 'Кит Elite'],
+      popular: false,
+      icon: 'Star'
+    }
+  ];
+
+  const rules = [
+    'Запрещено использование читов и модификаций',
+    'Уважайте других игроков',
+    'Не спамьте в чате',
+    'Запрещен гриф чужих построек',
+    'Следуйте указаниям администрации'
+  ];
+
+  const faq = [
+    {
+      question: 'Как получить привилегии после оплаты?',
+      answer: 'Привилегии выдаются автоматически в течение 5 минут после подтверждения платежа.'
+    },
+    {
+      question: 'Можно ли вернуть деньги?',
+      answer: 'Возврат средств возможен в течение 14 дней при технических проблемах с нашей стороны.'
+    },
+    {
+      question: 'Как связаться с поддержкой?',
+      answer: 'Вы можете написать нам в Discord или через форму обратной связи на сайте.'
+    }
+  ];
+
+  const handlePurchase = (privilegeName: string, price: number) => {
+    alert(`Покупка привилегии ${privilegeName} за ${price}₽ - функция в разработке`);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+      {/* Header */}
+      <header className="bg-black/20 backdrop-blur-sm border-b border-primary/20">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <Icon name="Zap" size={24} className="text-white" />
+              </div>
+              <h1 className="text-2xl font-bold text-white">MineCraft Донат</h1>
+            </div>
+            <nav className="hidden md:flex space-x-6">
+              {[
+                { id: 'privileges', label: 'Привилегии', icon: 'Crown' },
+                { id: 'rules', label: 'Правила', icon: 'Shield' },
+                { id: 'support', label: 'Поддержка', icon: 'MessageCircle' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveSection(item.id)}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                    activeSection === item.id
+                      ? 'bg-primary text-white'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Icon name={item.icon as any} size={18} />
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="py-20 text-center">
+        <div className="container mx-auto px-4">
+          <div className="mb-8">
+            <img 
+              src="/img/091f764a-69e9-46c8-b4eb-9d1bebf3f8b0.jpg" 
+              alt="Minecraft Server" 
+              className="w-full max-w-2xl mx-auto rounded-xl shadow-2xl"
+            />
+          </div>
+          <h2 className="text-5xl font-bold text-white mb-6">
+            Получи <span className="text-primary">привилегии</span> за секунды
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Автоматическая выдача привилегий после оплаты. Начни играть с преимуществами прямо сейчас!
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 text-lg"
+            onClick={() => setActiveSection('privileges')}
+          >
+            <Icon name="ShoppingCart" size={20} className="mr-2" />
+            Купить привилегию
+          </Button>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-12">
+        {/* Privileges Section */}
+        {activeSection === 'privileges' && (
+          <section className="animate-fade-in">
+            <h3 className="text-3xl font-bold text-white mb-8 text-center">Выберите привилегию</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              {privileges.map((privilege) => (
+                <Card key={privilege.id} className={`relative bg-gray-800/50 border-gray-700 hover:border-primary/50 transition-all hover:scale-105 ${privilege.popular ? 'ring-2 ring-primary' : ''}`}>
+                  {privilege.popular && (
+                    <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-1">
+                      Популярно
+                    </Badge>
+                  )}
+                  <CardHeader className="text-center pb-4">
+                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name={privilege.icon as any} size={32} className="text-primary" />
+                    </div>
+                    <CardTitle className="text-2xl text-white">{privilege.name}</CardTitle>
+                    <CardDescription className="text-3xl font-bold text-primary">
+                      {privilege.price}₽
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3 mb-6">
+                      {privilege.features.map((feature, index) => (
+                        <li key={index} className="flex items-center text-gray-300">
+                          <Icon name="Check" size={16} className="text-primary mr-3 flex-shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <Button 
+                      className="w-full bg-primary hover:bg-primary/90 text-white"
+                      onClick={() => handlePurchase(privilege.name, privilege.price)}
+                    >
+                      Купить сейчас
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Rules Section */}
+        {activeSection === 'rules' && (
+          <section className="animate-fade-in">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-3xl font-bold text-white mb-8 text-center">Правила сервера</h3>
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-xl text-white flex items-center">
+                    <Icon name="Shield" size={24} className="text-primary mr-3" />
+                    Основные правила
+                  </CardTitle>
+                  <CardDescription className="text-gray-300">
+                    Соблюдение правил обязательно для всех игроков
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {rules.map((rule, index) => (
+                      <div key={index} className="flex items-start">
+                        <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                          <span className="text-primary font-bold text-sm">{index + 1}</span>
+                        </div>
+                        <p className="text-gray-300 leading-relaxed">{rule}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-8 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+                    <div className="flex items-center mb-2">
+                      <Icon name="AlertTriangle" size={20} className="text-yellow-500 mr-2" />
+                      <span className="text-yellow-500 font-semibold">Важно</span>
+                    </div>
+                    <p className="text-gray-300 text-sm">
+                      Нарушение правил может привести к временной или постоянной блокировке аккаунта.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+        )}
+
+        {/* Support Section */}
+        {activeSection === 'support' && (
+          <section className="animate-fade-in">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-3xl font-bold text-white mb-8 text-center">Поддержка</h3>
+              
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                <Card className="bg-gray-800/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <Icon name="MessageCircle" size={24} className="text-primary mr-3" />
+                      Discord
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-300 mb-4">
+                      Присоединяйтесь к нашему Discord серверу для быстрой поддержки
+                    </p>
+                    <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+                      Присоединиться
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gray-800/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center">
+                      <Icon name="Mail" size={24} className="text-primary mr-3" />
+                      Email
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-300 mb-4">
+                      Напишите нам на почту для решения сложных вопросов
+                    </p>
+                    <p className="text-primary font-mono">support@minecraft-server.ru</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white">Часто задаваемые вопросы</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Accordion type="single" collapsible>
+                    {faq.map((item, index) => (
+                      <AccordionItem key={index} value={`item-${index}`} className="border-gray-700">
+                        <AccordionTrigger className="text-white hover:text-primary">
+                          {item.question}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-gray-300">
+                          {item.answer}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-black/30 border-t border-gray-700 py-8 mt-16">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-gray-400">
+            © 2024 MineCraft Донат. Все права защищены.
+          </p>
+          <p className="text-gray-500 text-sm mt-2">
+            IP сервера: mc.server.ru
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
